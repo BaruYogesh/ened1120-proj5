@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from ev3dev2.sound import Sound
 from time import sleep
 import math
@@ -109,4 +110,4 @@ def iGPS(rA, rC, rD):#tower a, b, c distances
 q = (72.)**(1/2)
 w = (6.**2+114.**2)**(1/2)
 e = (102.**2+114.**2)**(1/2)
-iGPS(q,w,e)
+

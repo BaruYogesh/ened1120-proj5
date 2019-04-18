@@ -8,6 +8,7 @@ from ev3dev2.led import Leds
 from ev3dev2.display import Display
 from ev3dev2.sound import Sound
 from ev3dev2.sensor.lego import ColorSensor
+from iGPS import Point_Select, iGPS
 import time
 import sys
 
@@ -22,6 +23,9 @@ td = MoveTank(OUTPUT_A,OUTPUT_D)
 claw = MediumMotor(OUTPUT_B)
 cs = ColorSensor()
 us = UltrasonicSensor()
+#gs = GyroSensor()
+
+
 
 '''
 globals cuz i'm a noob
@@ -29,7 +33,7 @@ global_power is what both my drive motors run off of. making a global makes it e
 openClaw is used to toggle the claw open and shut
 '''
 global_power = 35
-openClaw = True
+openClaw = False
 
 #debug function, copied from the example files. very helpful!
 def debug_print(*args, **kwargs):
@@ -71,18 +75,14 @@ def turn90(dir):
 def toggleClaw():
     global openClaw
     if(openClaw):
-        claw.on_for_rotations(SpeedPercent(50),-.85)
+        claw.on_for_rotations(SpeedPercent(80),-1.)
         openClaw=False
     else:
-        claw.on_for_rotations(SpeedPercent(50),.85)
+        claw.on_for_rotations(SpeedPercent(80),1.)
         openClaw=True
 
     time.sleep(1)
 
-#WIP iGPS
-def iGPS(a,b,d):
-    Display.text_pixels(0,a + " " + b + " " + d,30,30)
-    Sound.play_note(0,'D4',2)
 
 
 #WIP barcode scanning. will be used to get the type of box from reading the barcode.
@@ -96,7 +96,7 @@ def barcode():
         claw.on_for_degrees(30,100)
         time.sleep(1)
         
-        vals[x] = cs.color
+        vals[x] = cs.ambient_light_intensity
         debug_print(str(vals[x]) + ", ")
 
     #square 1 is black
@@ -122,21 +122,23 @@ def barcode():
 def getColor():
     return cs.color
 
+def testColorSensor():
+    for x in range(20):
+        debug_print(getColor())
+        time.sleep(1)
+
 #just runs the US sensor 10 times and gets values.
 def testUltraSonicSensor():
     for x in range(10):
         debug_print(us.distance_centimeters)
         time.sleep(1)
-
 '''
-debug_print(barcode())
-time.sleep(5)
+a = float(input("Input A: "))
+b = float(input("Input B: "))
+d = float(input("Input D: "))
 
+iGPS(a,b,d)
 
+toggleClaw()   
 toggleClaw()
-toggleClaw()
-
-for x in range(6):
-    s = input("input s")
-    print(s)
 '''
