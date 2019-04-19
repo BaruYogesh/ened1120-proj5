@@ -2,7 +2,7 @@
 #line 1 is very important! make sure you have that on the top of all of your robot files
 
 #import statements
-from ev3dev2.motor import LargeMotor, MediumMotor, OUTPUT_A, OUTPUT_D, OUTPUT_B, SpeedPercent, MoveTank
+from ev3dev2.motor import LargeMotor, MediumMotor, OUTPUT_A, OUTPUT_D, OUTPUT_B, SpeedPercent, MoveTank, Motor
 from ev3dev2.sensor.lego import TouchSensor, UltrasonicSensor
 from ev3dev2.led import Leds
 from ev3dev2.display import Display
@@ -132,6 +132,15 @@ def testUltraSonicSensor():
     for x in range(10):
         debug_print(us.distance_centimeters)
         time.sleep(1)
+def testRotationSensor():
+    a = Motor(OUTPUT_A)
+    b = Motor(OUTPUT_D)
+    for x in range(10):
+        debug_print("A:" + str(a.position))
+        debug_print("D:" + str(b.position))
+        td.on_for_rotations(global_power,global_power,1)
+        time.sleep(1)  
+    
 '''
 a = float(input("Input A: "))
 b = float(input("Input B: "))

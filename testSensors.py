@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from subtask_3 import testColorSensor, testUltraSonicSensor, claw, toggleClaw
+from subtask_3 import testColorSensor, testUltraSonicSensor, testRotationSensor, claw, toggleClaw, td
 
 running = True
 
@@ -14,6 +14,8 @@ while(running):
     elif(test=="claw"):
         toggleClaw()
         toggleClaw()
+    elif(test=="rotation"):
+        testRotationSensor()
     elif(test=="done"):
         running = False
     
