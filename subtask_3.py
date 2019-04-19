@@ -75,10 +75,10 @@ def turn90(dir):
 def toggleClaw():
     global openClaw
     if(openClaw):
-        claw.on_for_rotations(SpeedPercent(80),-1.)
+        claw.on_for_rotations(SpeedPercent(80),-1.75)
         openClaw=False
     else:
-        claw.on_for_rotations(SpeedPercent(80),1.)
+        claw.on_for_rotations(SpeedPercent(80),1.75)
         openClaw=True
 
     time.sleep(1)

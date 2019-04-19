@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from subtask_3 import testColorSensor, testUltraSonicSensor
+from subtask_3 import testColorSensor, testUltraSonicSensor, claw, toggleClaw
 
 running = True
 
@@ -11,6 +11,9 @@ while(running):
         testColorSensor()
     elif(test=="ultra"):
         testUltraSonicSensor()
+    elif(test=="claw"):
+        toggleClaw()
+        toggleClaw()
     elif(test=="done"):
         running = False
     
