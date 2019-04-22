@@ -8,7 +8,6 @@ from ev3dev2.led import Leds
 from ev3dev2.display import Display
 from ev3dev2.sound import Sound
 from ev3dev2.sensor.lego import ColorSensor
-from iGPS import Point_Select, iGPS
 import time
 import sys
 
@@ -75,10 +74,10 @@ def turn90(dir):
 def toggleClaw():
     global openClaw
     if(openClaw):
-        claw.on_for_rotations(SpeedPercent(80),-1.75)
+        claw.on_for_degrees(SpeedPercent(80),-300)
         openClaw=False
     else:
-        claw.on_for_rotations(SpeedPercent(80),1.75)
+        claw.on_for_degrees(SpeedPercent(80),300)
         openClaw=True
 
     time.sleep(1)
@@ -92,35 +91,66 @@ def barcode():
 
     #close claw and move sensor to left.
     toggleClaw()
+    claw.on_for_degrees(SpeedPercent(30),-65)
     for x in range(4):
-        claw.on_for_degrees(30,100)
-        time.sleep(1)
         
-        vals[x] = cs.ambient_light_intensity
-        debug_print(str(vals[x]) + ", ")
+        time.sleep(3)
+        
 
+        if(cs.ambient_light_intensity <= 3):
+            vals[x] = 0
+            debug_print("black: " + str(cs.ambient_light_intensity))
+        else:
+            vals[x] = 1
+            debug_print("white: " + str(cs.ambient_light_intensity))
+        #vals[x] = cs.ambient_light_intensity
+        #debug_print(str(vals[x]) + ", ")
+        claw.on_for_degrees(SpeedPercent(30),-75)
+        
+    '''
     #square 1 is black
-    if(vals[0]==1):
+    if(vals[0]==0):
         #square 2 is white
-        if(vals[1]==6):
+        if(vals[1]==1):
             #square 3 is white
-            if(vals[2]==6):
+            if(vals[2]==1):
                 return 2
             else:
             #square 3 is black
                 return 4
         #square 2 is black
-        elif(vals[1]==1):
+        elif(vals[1]==0):
             return 3
         else:
             return 1
     else: 
         return -1
+    '''
+    claw.off()
+    
+    #old code reads from left to right, new will read bottom to top
 
+    #0 IS BLACK, 1 IS WHITE
+    if(vals[0]==0):
+        return 4
+    else:
+        if(vals[1]==0):
+            return 2
+        else:
+            if(vals[2]==0):
+                return 3
+            else:
+                return 1
+    
+    return -1
+
+def iGPS(a,b,d):
+    Sound.beep(0)
+    
         
 #gets color from color sensor
 def getColor():
-    return cs.color
+    return cs.ambient_light_intensity
 
 def testColorSensor():
     for x in range(20):
@@ -134,11 +164,15 @@ def testUltraSonicSensor():
         time.sleep(1)
 def testRotationSensor():
     a = Motor(OUTPUT_A)
-    b = Motor(OUTPUT_D)
+    d = Motor(OUTPUT_D)
+    b = Motor(OUTPUT_B)
+
     for x in range(10):
         debug_print("A:" + str(a.position))
-        debug_print("D:" + str(b.position))
-        td.on_for_rotations(global_power,global_power,1)
+        debug_print("D:" + str(d.position))
+        debug_print("B:" + str(b.position))
+        #td.on_for_rotations(global_power,global_power,1)
+
         time.sleep(1)  
     
 '''

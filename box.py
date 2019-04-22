@@ -12,7 +12,7 @@ move(dist, True)
 
 td.on_for_rotations(20,20,0.0588235*6)
 
-claw.on_for_rotations(SpeedPercent(80),-1.75)
+claw.on_for_rotations(SpeedPercent(80),-2.55)
 move(dist+6, False)
 
 

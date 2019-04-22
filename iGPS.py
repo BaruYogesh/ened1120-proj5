@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 from ev3dev2.sound import Sound
-from time import sleep
+#from time import sleep
 import math
 import os
 import sys
 import time
+
+#MADE BY JP WANG, not me
 
 # state constants
 ON = True
@@ -111,3 +113,4 @@ q = (72.)**(1/2)
 w = (6.**2+114.**2)**(1/2)
 e = (102.**2+114.**2)**(1/2)
 
+iGPS(1,2,3)
