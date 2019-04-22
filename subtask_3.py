@@ -22,6 +22,7 @@ td = MoveTank(OUTPUT_A,OUTPUT_D)
 claw = MediumMotor(OUTPUT_B)
 cs = ColorSensor()
 us = UltrasonicSensor()
+lcd = Display()
 #gs = GyroSensor()
 
 
@@ -107,25 +108,7 @@ def barcode():
         #debug_print(str(vals[x]) + ", ")
         claw.on_for_degrees(SpeedPercent(30),-75)
         
-    '''
-    #square 1 is black
-    if(vals[0]==0):
-        #square 2 is white
-        if(vals[1]==1):
-            #square 3 is white
-            if(vals[2]==1):
-                return 2
-            else:
-            #square 3 is black
-                return 4
-        #square 2 is black
-        elif(vals[1]==0):
-            return 3
-        else:
-            return 1
-    else: 
-        return -1
-    '''
+    
     claw.off()
     
     #old code reads from left to right, new will read bottom to top
@@ -144,9 +127,45 @@ def barcode():
     
     return -1
 
-def iGPS(a,b,d):
+def iGPS(r1,r2,r3):
+    #constants
+    x1 = 6
+    y1 = -6
+    x2 = 6
+    y2 = 114
+    x3 = 102
+    y3 = 114
+
+    #provided formulas
+    x = (-(y2 - y3)*((y2**2-y1**2)+(x2**2-x1**2)+(r1-r2)) + (y1-y2)*((y3**2-y2**2)+(x3**2-x2**2)+(r2-r3)))/(2*((x1-x2)*(y2-y3) - (x2-x3)*(y1-y2)))
+    y = (-(x2 - x3)*((x2**2 - x1**2) + (y2**2 - y1**2) + (r1 - r2))+((x1-x2)*((x3**2-x2**2)+(y3**2-y2**2)+(r2-r3))))/(2*((y1-y2)*(x2-x3) - (y2-y3)*(x1-x2)))
+
+    #log to console
+    print("r1: " + str(r1))
+    print("r2: " + str(r2))
+    print("r3: " + str(r3))
+
+    print("x: " + str(x))
+    print("y: " + str(y))
+
+    #print on screen
+    lcd.draw.text((0,10),"r1: " + str(r1))
+    lcd.draw.text((0,20),"r2: " + str(r2))
+    lcd.draw.text((0,30),"r3: " + str(r3))
+
+    lcd.draw.text((0,40),"x: " + str(x))
+    lcd.draw.text((0,50),"y: " + str(y))
+    lcd.update()
+
+    #beep beep
     Sound.beep(0)
-    
+    Sound.beep(0)
+
+    #keep on screen before ending
+    time.sleep(10)
+
+
+ #test functions for testing sensors and movement   
         
 #gets color from color sensor
 def getColor():
