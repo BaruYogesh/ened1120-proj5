@@ -3,9 +3,9 @@
 from subtask_3 import toggleClaw, move, openClaw, claw, SpeedPercent, td
 
 
-dist = float(input("Input distance to move"))
+#dist = float(input("Input distance to move"))
 
-dist = dist-11
+dist = 0
 #openClaw = True
 
 move(dist, True)

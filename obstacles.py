@@ -2,7 +2,7 @@
 
 from subtask_3 import turn90, move, td, us, global_power,time
 
-dist = int(input("Input distance: "))
+#dist = int(input("Input distance: "))
 
 #global
 obst = False
